@@ -19,18 +19,18 @@ import { products, markets, articles, Testimonial, tradeVideos, testimonials } f
   </section>
 
   <section class="stats reveal">
-    <div><strong>50+</strong><span>Countries tracked</span></div><div><strong>{{products.length}}</strong><span>Product lanes</span></div><div><strong>115</strong><span>Success snapshots</span></div><div><strong>24/7</strong><span>Lead capture</span></div>
+    <div><strong>50+</strong><span>Countries tracked</span></div><div><strong>{{products.length}}</strong><span>Product lanes</span></div><div><strong>{{testimonials.length}}</strong><span>Success snapshots</span></div><div><strong>24/7</strong><span>Lead capture</span></div>
   </section>
 
   <section class="section product-cinema home-cinema reveal">
     <div class="cinema-copy">
-      <span class="eyebrow">Import Export Dashboard</span>
-      <h2>See how OroPrime helps buyers and suppliers trade products globally</h2>
-      <p>This section gives a simple view of our import-export work: product sourcing, buyer requirements, supplier readiness, destination countries, documents and quote preparation. We help businesses buy and sell goods internationally with clear next steps.</p>
+      <span class="eyebrow">Global Trade Sourcing</span>
+      <h2>Buy and sell export-ready products with clear supplier, price and document checks</h2>
+      <p>OroPrime connects international buyers with verified product sources for agro goods, food products, metals, wellness items and lifestyle categories. We help compare product quality, origin, packing, destination requirements, trade documents and quote details before buyers and suppliers move forward.</p>
       <div class="cinema-points">
-        <span>Global product sourcing</span>
-        <span>Import and export support</span>
-        <span>Buyer-supplier coordination</span>
+        <span>Export and import product sourcing</span>
+        <span>Buyer requirements and supplier readiness</span>
+        <span>Quote, document and destination planning</span>
       </div>
     </div>
     <div class="cinema-stage">
@@ -42,7 +42,7 @@ import { products, markets, articles, Testimonial, tradeVideos, testimonials } f
     </div>
   </section>
 
-  <section class="section reveal">
+  <section class="section reveal product-motion-section">
     <div class="section-head slider-head">
       <div><span>Products</span><h2>Premium export categories</h2><p>Built for buyers who need clarity on origin, usage, documentation and quantity before starting a trade conversation.</p></div>
       <div class="slider-controls">
@@ -50,7 +50,7 @@ import { products, markets, articles, Testimonial, tradeVideos, testimonials } f
         <button type="button" aria-label="Next products" (click)="slide('productSlider', 1)">›</button>
       </div>
     </div>
-    <div id="productSlider" class="slider-track product-slider" tabindex="0" (focusin)="pauseProductSlider()" (focusout)="resumeProductSlider()" (pointerdown)="pauseProductSlider()">
+    <div id="productSlider" class="slider-track product-slider motion-slider" tabindex="0" (mouseenter)="pauseProductSlider()" (mouseleave)="resumeProductSlider()" (focusin)="pauseProductSlider()" (focusout)="resumeProductSlider()" (pointerdown)="pauseProductSlider()">
       @for (product of products; track product.name) {
         <article class="product-card slider-card lift" tabindex="0">
           <img [src]="product.image" [alt]="product.name" />
@@ -60,7 +60,7 @@ import { products, markets, articles, Testimonial, tradeVideos, testimonials } f
     </div>
   </section>
 
-  <section class="editorial-section reveal">
+  <section class="editorial-section reveal case-motion-section">
     <div class="section-head slider-head">
       <div>
         <span>Case Studies / Blogs</span>
@@ -72,7 +72,7 @@ import { products, markets, articles, Testimonial, tradeVideos, testimonials } f
         <button type="button" aria-label="Next case studies" (click)="slide('caseSlider', 1)">›</button>
       </div>
     </div>
-    <div id="caseSlider" class="slider-track case-slider">
+    <div id="caseSlider" class="slider-track case-slider motion-slider" tabindex="0" (mouseenter)="pauseCaseSlider()" (mouseleave)="resumeCaseSlider()" (focusin)="pauseCaseSlider()" (focusout)="resumeCaseSlider()" (pointerdown)="pauseCaseSlider()">
       @for (article of articles; track article.title) {
         <article class="article-card case-study-card slider-card lift">
           <img [src]="article.image" [alt]="article.title" />
@@ -113,11 +113,11 @@ import { products, markets, articles, Testimonial, tradeVideos, testimonials } f
         <button type="button" aria-label="Next testimonials" (click)="slide('testimonialSlider', 1)">›</button>
       </div>
     </div>
-    <div id="testimonialSlider" class="slider-track testimonial-slider">
+    <div id="testimonialSlider" class="slider-track testimonial-slider" tabindex="0" (mouseenter)="pauseTestimonialSlider()" (mouseleave)="resumeTestimonialSlider()" (focusin)="pauseTestimonialSlider()" (focusout)="resumeTestimonialSlider()">
       @for (item of testimonials; track item.name) {
         <article class="testimonial-card slider-card lift">
           <div class="testimonial-top">
-            <span class="avatar-tile" [style.backgroundImage]="avatarImage(item)" [style.backgroundPosition]="avatarPosition(item)"></span>
+            <span class="avatar-tile" [style.backgroundImage]="avatarImage(item)"></span>
             <img class="flag-badge" [src]="flagUrl(item)" [alt]="item.location + ' flag'">
           </div>
           <small>{{item.role}} · {{item.product}} · {{item.location}}</small>
@@ -166,22 +166,27 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   selected = signal('United States');
   private testimonialTimer?: number;
   private productTimer?: number;
+  private caseTimer?: number;
   private cinemaTimer?: number;
   private productIndex = 0;
+  private caseIndex = 0;
   private productPaused = false;
+  private casePaused = false;
 
   constructor(private sanitizer: DomSanitizer) {}
 
   ngAfterViewInit(): void {
     this.startAmbientVideos();
     this.cinemaTimer = window.setInterval(() => this.startAmbientVideos(), 2000);
-    this.testimonialTimer = window.setInterval(() => this.slide('testimonialSlider', 1), 3000);
-    this.productTimer = window.setInterval(() => this.advanceProductSlider(), 3000);
+    this.resumeTestimonialSlider();
+    this.resumeProductSlider();
+    this.resumeCaseSlider();
   }
 
   ngOnDestroy(): void {
     if (this.testimonialTimer) window.clearInterval(this.testimonialTimer);
     if (this.productTimer) window.clearInterval(this.productTimer);
+    if (this.caseTimer) window.clearInterval(this.caseTimer);
     if (this.cinemaTimer) window.clearInterval(this.cinemaTimer);
   }
 
@@ -193,10 +198,30 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
+  pauseTestimonialSlider(): void {
+    if (this.testimonialTimer) {
+      window.clearInterval(this.testimonialTimer);
+      this.testimonialTimer = undefined;
+    }
+  }
+
+  resumeTestimonialSlider(): void {
+    if (!this.testimonialTimer) {
+      this.testimonialTimer = window.setInterval(() => this.slide('testimonialSlider', 1), 3000);
+    }
+  }
+
   slide(id: string, direction: number): void {
     if (id === 'productSlider') {
       this.pauseProductSlider();
       this.moveProductSlider(direction, 'smooth');
+      this.resumeProductSlider();
+      return;
+    }
+    if (id === 'caseSlider') {
+      this.pauseCaseSlider();
+      this.moveCaseSlider(direction, 'smooth');
+      this.resumeCaseSlider();
       return;
     }
     const el = document.getElementById(id);
@@ -208,14 +233,11 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
 
   avatarImage(item: Testimonial): string {
-    return 'url("assets/images/testimonial-portraits-unique.png")';
-  }
-
-  avatarPosition(item: Testimonial): string {
-    const index = item.avatar % 120;
-    const col = index % 12;
-    const row = Math.floor(index / 12);
-    return `${col * 9.0909}% ${row * 11.1111}%`;
+    if (item.avatarFile) {
+      return `url("assets/images/testimonials/${item.avatarFile}")`;
+    }
+    const index = (item.avatar % 120) + 1;
+    return `url("assets/images/testimonials/person-${index.toString().padStart(3, '0')}.jpg")`;
   }
 
   flagUrl(item: Testimonial): string {
@@ -269,17 +291,46 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
   pauseProductSlider(): void {
     this.productPaused = true;
+    if (this.productTimer) {
+      window.clearInterval(this.productTimer);
+      this.productTimer = undefined;
+    }
   }
 
   resumeProductSlider(): void {
     window.setTimeout(() => {
       this.productPaused = false;
+      if (!this.productTimer) {
+        this.productTimer = window.setInterval(() => this.advanceProductSlider(), 3000);
+      }
+    }, 1200);
+  }
+
+  pauseCaseSlider(): void {
+    this.casePaused = true;
+    if (this.caseTimer) {
+      window.clearInterval(this.caseTimer);
+      this.caseTimer = undefined;
+    }
+  }
+
+  resumeCaseSlider(): void {
+    window.setTimeout(() => {
+      this.casePaused = false;
+      if (!this.caseTimer) {
+        this.caseTimer = window.setInterval(() => this.advanceCaseSlider(), 3000);
+      }
     }, 1200);
   }
 
   private advanceProductSlider(): void {
     if (this.productPaused) return;
     this.moveProductSlider(1, 'auto');
+  }
+
+  private advanceCaseSlider(): void {
+    if (this.casePaused) return;
+    this.moveCaseSlider(1, 'auto');
   }
 
   private moveProductSlider(direction: number, behavior: ScrollBehavior): void {
@@ -289,6 +340,15 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     this.productIndex = (this.productIndex + direction + this.products.length) % this.products.length;
     const gap = 24;
     el.scrollTo({ left: this.productIndex * (card.offsetWidth + gap), behavior });
+  }
+
+  private moveCaseSlider(direction: number, behavior: ScrollBehavior): void {
+    const el = document.getElementById('caseSlider');
+    const card = el?.querySelector<HTMLElement>('.slider-card');
+    if (!el || !card) return;
+    this.caseIndex = (this.caseIndex + direction + this.articles.length) % this.articles.length;
+    const gap = 24;
+    el.scrollTo({ left: this.caseIndex * (card.offsetWidth + gap), behavior });
   }
 
   private startAmbientVideos(): void {

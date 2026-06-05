@@ -41,11 +41,11 @@ import { Testimonial, testimonials } from '../../data/site-data';
     <h2>Trade wins across global corridors</h2>
     <p>Buyer and supplier stories from cashew, metal and agro product import-export work across multiple regions.</p>
   </div>
-  <div id="aboutTestimonialSlider" class="slider-track testimonial-slider">
+  <div id="aboutTestimonialSlider" class="slider-track testimonial-slider" tabindex="0" (mouseenter)="pauseTestimonialSlider()" (mouseleave)="resumeTestimonialSlider()" (focusin)="pauseTestimonialSlider()" (focusout)="resumeTestimonialSlider()">
     @for (item of testimonials; track item.name) {
       <article class="testimonial-card slider-card lift">
         <div class="testimonial-top">
-          <span class="avatar-tile" [style.backgroundImage]="avatarImage(item)" [style.backgroundPosition]="avatarPosition(item)"></span>
+          <span class="avatar-tile" [style.backgroundImage]="avatarImage(item)"></span>
           <img class="flag-badge" [src]="flagUrl(item)" [alt]="item.location + ' flag'">
         </div>
         <small>{{item.role}} · {{item.product}} · {{item.location}}</small>
@@ -62,7 +62,7 @@ export class AboutComponent implements AfterViewInit, OnDestroy {
   private testimonialTimer?: number;
 
   ngAfterViewInit(): void {
-    this.testimonialTimer = window.setInterval(() => this.slide(1), 3000);
+    this.resumeTestimonialSlider();
   }
 
   ngOnDestroy(): void {
@@ -78,15 +78,25 @@ export class AboutComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  avatarImage(item: Testimonial): string {
-    return 'url("assets/images/testimonial-portraits-unique.png")';
+  pauseTestimonialSlider(): void {
+    if (this.testimonialTimer) {
+      window.clearInterval(this.testimonialTimer);
+      this.testimonialTimer = undefined;
+    }
   }
 
-  avatarPosition(item: Testimonial): string {
-    const index = item.avatar % 120;
-    const col = index % 12;
-    const row = Math.floor(index / 12);
-    return `${col * 9.0909}% ${row * 11.1111}%`;
+  resumeTestimonialSlider(): void {
+    if (!this.testimonialTimer) {
+      this.testimonialTimer = window.setInterval(() => this.slide(1), 3000);
+    }
+  }
+
+  avatarImage(item: Testimonial): string {
+    if (item.avatarFile) {
+      return `url("assets/images/testimonials/${item.avatarFile}")`;
+    }
+    const index = (item.avatar % 120) + 1;
+    return `url("assets/images/testimonials/person-${index.toString().padStart(3, '0')}.jpg")`;
   }
 
   flagUrl(item: Testimonial): string {

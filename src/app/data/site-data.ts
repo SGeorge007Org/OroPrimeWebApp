@@ -13,7 +13,7 @@ export interface Market {
 }
 export interface Article { type: string; title: string; summary: string; image: string; meta: string; }
 export interface TradeVideo { title: string; summary: string; embed: string; tag: string; }
-export interface Testimonial { name: string; location: string; flag: string; role: string; product: string; quote: string; metric: string; avatar: number; }
+export interface Testimonial { name: string; location: string; flag: string; role: string; product: string; quote: string; metric: string; avatar: number; avatarFile?: string; }
 export interface GlobalExportLeader { country: string; exports: number; topGood: string; }
 
 export const testimonialAvatarImages = [
@@ -88,7 +88,6 @@ const testimonialsBase: Testimonial[] = [
   { name: 'Aarav N.', location: 'India', flag: '🇮🇳', role: 'Importer', product: 'Cashew import', quote: 'OroPrime helped us turn a broad raw-cashew inquiry into a clean landed-cost view with supplier checks, duty notes and container assumptions.', metric: 'Quote-ready in 72 hours', avatar: 0 },
   { name: 'Maya R.', location: 'United States', flag: '🇺🇸', role: 'Supplier', product: 'Scrap metal export', quote: 'The team clarified grade, inspection, pickup terms and buyer documentation before pricing, which reduced back-and-forth with overseas mills.', metric: '3 verified buyer lanes', avatar: 1 },
   { name: 'Hassan K.', location: 'Dubai, UAE', flag: '🇦🇪', role: 'Importer', product: 'Agro commodities', quote: 'Their market screening made it easier to compare agro shipments across ports and identify which products had realistic repeat demand.', metric: 'GCC-ready RFQ pack', avatar: 2 },
-  { name: 'Olivia M.', location: 'New Zealand', flag: '🇳🇿', role: 'Buyer', product: 'Specialty sourcing', quote: 'We needed practical import guidance, not generic talk. OroPrime gave us a clear product, compliance and logistics checklist before supplier outreach.', metric: 'Lower sourcing risk', avatar: 3 },
   { name: 'Prakash S.', location: 'Nepal', flag: '🇳🇵', role: 'Exporter', product: 'Ginger and agro trade', quote: 'The documentation checklist and regional trade-lane review helped us prepare buyer communication with confidence.', metric: 'Cleaner documentation flow', avatar: 4 },
   { name: 'Leila A.', location: 'Morocco', flag: '🇲🇦', role: 'Buyer', product: 'Fresh ginger', quote: 'The RFQ pack separated fresh, dry and powder ginger requirements so our team could compare prices without confusion.', metric: '4 product specs aligned', avatar: 5 },
   { name: 'Daniel P.', location: 'Canada', flag: '🇨🇦', role: 'Importer', product: 'Cashew kernels', quote: 'We got practical support on grade, pack size, origin and inspection expectations before supplier introductions started.', metric: 'W-320 lane prepared', avatar: 6 },
@@ -135,50 +134,248 @@ const testimonialsBase: Testimonial[] = [
   { name: 'Omar N.', location: 'Bahrain', flag: '🇧🇭', role: 'Buyer', product: 'Agro distribution', quote: 'The GCC distribution view was useful for deciding which products to prioritize.', metric: 'Priority list created', avatar: 23 },
   { name: 'Sarah T.', location: 'Canada', flag: '🇨🇦', role: 'Supplier', product: 'Metal sourcing', quote: 'OroPrime made the buyer communication more structured and reduced repeated questions.', metric: 'Follow-up reduced', avatar: 0 },
   { name: 'Akira N.', location: 'Japan', flag: '🇯🇵', role: 'Importer', product: 'Cashew snacks', quote: 'The grade and packaging comparison helped us define a realistic buying brief.', metric: 'Buying brief ready', avatar: 1 },
-  { name: 'Ravi M.', location: 'India', flag: '🇮🇳', role: 'Supplier', product: 'Agro commodities', quote: 'Their documentation support helped us prepare cleaner export conversations with new buyers.', metric: 'Docs checklist complete', avatar: 2 },
   { name: 'Claire D.', location: 'New Zealand', flag: '🇳🇿', role: 'Importer', product: 'Ginger products', quote: 'The market guide made fresh, dry and powder ginger options easier to evaluate.', metric: 'Product route selected', avatar: 3 },
   { name: 'Bilal H.', location: 'UAE', flag: '🇦🇪', role: 'Buyer', product: 'Scrap metal', quote: 'We liked the early focus on inspection, customs and material authenticity.', metric: 'Risk screen complete', avatar: 4 },
   { name: 'Anita C.', location: 'Kenya', flag: '🇰🇪', role: 'Exporter', product: 'Cashew origin', quote: 'OroPrime helped us convert supplier details into a clearer buyer-facing presentation.', metric: 'Buyer presentation ready', avatar: 5 },
   { name: 'Mateo R.', location: 'Colombia', flag: '🇨🇴', role: 'Importer', product: 'Food commodities', quote: 'The sourcing notes gave us confidence to compare suppliers across regions.', metric: 'Supplier comparison live', avatar: 6 }
 ];
 
-const indiaLocations = [
-  'Gujarat, India', 'Maharashtra, India', 'Punjab, India', 'Tamil Nadu, India', 'Kerala, India',
-  'Karnataka, India', 'Andhra Pradesh, India', 'Telangana, India', 'Rajasthan, India', 'Uttar Pradesh, India',
-  'Madhya Pradesh, India', 'West Bengal, India', 'Odisha, India', 'Assam, India', 'Bihar, India'
+const indianProfiles = [
+  { name: 'Rohit P.', location: 'Maharashtra, India', role: 'Exporter', product: 'Fresh ginger', avatarFile: 'person-001.jpg' },
+  { name: 'Sita K.', location: 'Kerala, India', role: 'Supplier', product: 'Cashew kernels', avatarFile: 'person-002.jpg' },
+  { name: 'Vikas R.', location: 'Delhi, India', role: 'Importer', product: 'Scrap metal', avatarFile: 'person-003.jpg' },
+  { name: 'Arjun & Team', location: 'Gujarat, India', role: 'Buyer', product: 'Agro commodities', avatarFile: 'person-004.jpg' },
+  { name: 'Nirmala T.', location: 'Tamil Nadu, India', role: 'Processor', product: 'Herbal products', avatarFile: 'person-005.jpg' },
+  { name: 'Manoj B.', location: 'Bihar, India', role: 'Exporter', product: 'Makhana', avatarFile: 'person-006.jpg' },
+  { name: 'Farhan A.', location: 'Uttar Pradesh, India', role: 'Supplier', product: 'Leather goods', avatarFile: 'person-007.jpg' },
+  { name: 'Deepak M.', location: 'Karnataka, India', role: 'Supplier', product: 'Cashew kernels', avatarFile: 'person-008.jpg' },
+  { name: 'Bhanwar S.', location: 'Rajasthan, India', role: 'Exporter', product: 'Leather goods', avatarFile: 'person-011.jpg' },
+  { name: 'Ajay N.', location: 'Maharashtra, India', role: 'Buyer', product: 'Rice and grains', avatarFile: 'person-012.jpg' },
+  { name: 'Kamala D.', location: 'West Bengal, India', role: 'Supplier', product: 'Rice and grains', avatarFile: 'person-013.jpg' },
+  { name: 'Ishaan V.', location: 'Gujarat, India', role: 'Importer', product: 'Industrial scrap', avatarFile: 'person-014.jpg' },
+  { name: 'Naveen K.', location: 'Andhra Pradesh, India', role: 'Supplier', product: 'Raw cashew', avatarFile: 'person-015.jpg' },
+  { name: 'Mahesh L.', location: 'Rajasthan, India', role: 'Exporter', product: 'Jewellery', avatarFile: 'person-016.jpg' },
+  { name: 'Pooja M.', location: 'Maharashtra, India', role: 'Buyer', product: 'Baby food', avatarFile: 'person-017.jpg' },
+  { name: 'Gopal N.', location: 'Tamil Nadu, India', role: 'Supplier', product: 'Fresh ginger', avatarFile: 'person-018.jpg' },
+  { name: 'Lakshmi R.', location: 'Karnataka, India', role: 'Processor', product: 'Cashew kernels', avatarFile: 'person-019.jpg' },
+  { name: 'Raghav S.', location: 'Telangana, India', role: 'Exporter', product: 'Biofuel', avatarFile: 'person-020.jpg' },
+  { name: 'Mei L.', location: 'Arunachal Pradesh, India', role: 'Buyer', product: 'Premium tea', avatarFile: 'person-048.jpg' },
+  { name: 'Anjali W.', location: 'Assam, India', role: 'Supplier', product: 'Premium tea', avatarFile: 'person-022.jpg' },
+  { name: 'Devendra J.', location: 'Madhya Pradesh, India', role: 'Supplier', product: 'Corn silk', avatarFile: 'person-023.jpg' },
+  { name: 'Sahil S.', location: 'Punjab, India', role: 'Buyer', product: 'Agro commodities', avatarFile: 'person-024.jpg' },
+  { name: 'Harpreet S.', location: 'Punjab, India', role: 'Supplier', product: 'Rice and grains', avatarFile: 'person-025.jpg' },
+  { name: 'Rajan G.', location: 'Maharashtra, India', role: 'Importer', product: 'Metal scrap', avatarFile: 'person-026.jpg' },
+  { name: 'Bhavna L.', location: 'Goa, India', role: 'Supplier', product: 'Cashew processing', avatarFile: 'person-027.jpg' },
+  { name: 'Chetan U.', location: 'Gujarat, India', role: 'Exporter', product: 'Biofuel', avatarFile: 'person-028.jpg' },
+  { name: 'Pradeep O.', location: 'Uttar Pradesh, India', role: 'Buyer', product: 'Leather goods', avatarFile: 'person-029.jpg' },
+  { name: 'Asha N.', location: 'Odisha, India', role: 'Supplier', product: 'Rice and grains', avatarFile: 'person-030.jpg' },
+  { name: 'Priya J.', location: 'Karnataka, India', role: 'Exporter', product: 'Moringa powder', avatarFile: 'person-032.jpg' },
+  { name: 'Imran Q.', location: 'Maharashtra, India', role: 'Supplier', product: 'Ferrous scrap', avatarFile: 'person-036.jpg' },
+  { name: 'Vikram C.', location: 'Rajasthan, India', role: 'Exporter', product: 'Spice exports', avatarFile: 'person-039.jpg' },
+  { name: 'Komal P.', location: 'Delhi, India', role: 'Buyer', product: 'Jewellery', avatarFile: 'person-040.jpg' },
+  { name: 'Kunal M.', location: 'Bihar, India', role: 'Supplier', product: 'Makhana', avatarFile: 'person-041.jpg' },
+  { name: 'Radha J.', location: 'Rajasthan, India', role: 'Supplier', product: 'Agro commodities', avatarFile: 'person-043.jpg' },
+  { name: 'Omkar I.', location: 'Maharashtra, India', role: 'Exporter', product: 'Essential oils', avatarFile: 'person-044.jpg' },
+  { name: 'Dinesh C.', location: 'Tamil Nadu, India', role: 'Supplier', product: 'Fresh ginger', avatarFile: 'person-049.jpg' },
+  { name: 'Rekha S.', location: 'Maharashtra, India', role: 'Buyer', product: 'Baby food', avatarFile: 'person-052.jpg' },
+  { name: 'Sunita H.', location: 'Odisha, India', role: 'Processor', product: 'Rice and grains', avatarFile: 'person-053.jpg' },
+  { name: 'Mehul G.', location: 'Gujarat, India', role: 'Importer', product: 'Scrap metal', avatarFile: 'person-054.jpg' },
+  { name: 'Nitin M.', location: 'Delhi, India', role: 'Exporter', product: 'Leather goods', avatarFile: 'person-055.jpg' },
+  { name: 'Mina J.', location: 'Kerala, India', role: 'Supplier', product: 'Raw cashew', avatarFile: 'person-056.jpg' },
+  { name: 'Neha E.', location: 'Maharashtra, India', role: 'Buyer', product: 'Jewellery', avatarFile: 'person-060.jpg' },
+  { name: 'Savita I.', location: 'Karnataka, India', role: 'Supplier', product: 'Cashew kernels', avatarFile: 'person-061.jpg' },
+  { name: 'Yogesh & Kavita', location: 'Rajasthan, India', role: 'Exporter', product: 'Jewellery', avatarFile: 'person-062.jpg' },
+  { name: 'Bharat F.', location: 'Maharashtra, India', role: 'Exporter', product: 'Ginger powder', avatarFile: 'person-066.jpg' },
+  { name: 'Geeta O.', location: 'Andhra Pradesh, India', role: 'Processor', product: 'Cashew kernels', avatarFile: 'person-067.jpg' },
+  { name: 'Jaya F.', location: 'Tamil Nadu, India', role: 'Supplier', product: 'Herbal products', avatarFile: 'person-068.jpg' },
+  { name: 'Varsha B.', location: 'Assam, India', role: 'Exporter', product: 'Premium tea', avatarFile: 'person-072.jpg' },
+  { name: 'Sanjay D.', location: 'Uttar Pradesh, India', role: 'Importer', product: 'Agro commodities', avatarFile: 'person-082.jpg' },
+  { name: 'Rohit K.', location: 'Gujarat, India', role: 'Buyer', product: 'Biofuel', avatarFile: 'person-098.jpg' },
+  { name: 'Payal V.', location: 'Delhi, India', role: 'Buyer', product: 'Jewellery', avatarFile: 'person-099.jpg' },
+  { name: 'Parul C.', location: 'Rajasthan, India', role: 'Exporter', product: 'Jewellery', avatarFile: 'person-110.jpg' },
+  { name: 'Ajay & Meena', location: 'Maharashtra, India', role: 'Supplier', product: 'Agro commodities', avatarFile: 'person-111.jpg' },
+  { name: 'Mukesh Y.', location: 'Uttar Pradesh, India', role: 'Buyer', product: 'Rice and grains', avatarFile: 'person-117.jpg' },
+  { name: 'Arjun Y.', location: 'Punjab, India', role: 'Supplier', product: 'Rice and grains', avatarFile: 'person-119.jpg' },
+  { name: 'Seema H.', location: 'Karnataka, India', role: 'Processor', product: 'Baby food', avatarFile: 'person-120.jpg' }
 ];
 
-const indiaNames = [
-  'Ramesh P.', 'Sita D.', 'Harpreet S.', 'Lakshmi K.', 'Anil V.', 'Kavita R.', 'Manoj T.', 'Farhan A.',
-  'Nirmala B.', 'Devendra J.', 'Pooja M.', 'Gopal N.', 'Rekha S.', 'Imran Q.', 'Vikram C.', 'Sunita H.',
-  'Mahesh L.', 'Anjali W.', 'Deepak U.', 'Ritu P.', 'Kiran Z.', 'Mehul G.', 'Savita I.', 'Arjun Y.',
-  'Neha E.', 'Bharat F.', 'Geeta O.', 'Raghav A.', 'Parul C.', 'Sanjay D.', 'Mina J.', 'Rohit K.',
-  'Bhavna L.', 'Nitin M.', 'Asha N.', 'Pradeep O.', 'Komal P.', 'Yogesh Q.', 'Rina R.', 'Sahil S.',
-  'Leela T.', 'Chetan U.', 'Payal V.', 'Ajay W.', 'Hema X.', 'Mukesh Y.', 'Tara Z.', 'Ishaan A.',
-  'Varsha B.', 'Dinesh C.', 'Kusum D.', 'Naveen E.', 'Jaya F.', 'Rajan G.', 'Seema H.', 'Omkar I',
-  'Radha J.', 'Vijay K.', 'Meena L.', 'Kunal M.'
-];
+function productFeedback(product: string, role: string, location: string, index: number): string {
+  const isSeller = role === 'Supplier' || role === 'Exporter' || role === 'Processor';
+  const place = location.replace(', India', '');
+  const buyerClosers = [
+    'That made our buying brief specific enough for a serious quote.',
+    'It helped us compare suppliers without mixing grade, packing and freight questions.',
+    'Our team could decide what to ask before spending time on supplier calls.',
+    'The landed-cost review felt practical because the product assumptions were written clearly.',
+    'It gave us confidence to move from general enquiry to a proper RFQ.'
+  ];
+  const sellerClosers = [
+    'Buyers responded better because the offer had the details they usually ask for later.',
+    'It made our first reply look more professional and reduced repeated follow-up questions.',
+    'We could explain our capacity and documents without sounding vague.',
+    'The buyer conversation moved faster because quality, packing and shipment basics were ready.',
+    'It helped us show our product as export-ready instead of just locally available.'
+  ];
+  const closers = isSeller ? sellerClosers : buyerClosers;
+  const close = closers[index % closers.length];
+  const notes: Record<string, string[]> = {
+    'fresh ginger': [
+      `For fresh ginger from ${place}, OroPrime asked us to confirm washed or unwashed stock, rhizome size, carton weight and phytosanitary timing.`,
+      `They separated fresh ginger requirements by size, season and destination instead of treating it like a simple spice enquiry.`
+    ],
+    'cashew kernels': [
+      `For cashew kernels, OroPrime made us separate W-240, W-320, broken grades, moisture limits and carton packing before pricing.`,
+      `The cashew discussion became clearer once grade, origin, packing weight and sample expectations were written in one buyer file.`
+    ],
+    'scrap metal': [
+      `For scrap metal, OroPrime focused on grade photos, HMS versus shredded material, radiation-free note, loading weight and inspection timing.`,
+      `They made the scrap enquiry practical by asking for yard location, material mix, container weight and buyer inspection process.`
+    ],
+    'industrial scrap': [
+      `The industrial scrap brief included grade, photo proof, loading method and pickup terms before the price conversation started.`,
+      `OroPrime helped us avoid mixed-material offers by separating ferrous, stainless and aluminum scrap requirements.`
+    ],
+    'ferrous scrap': [
+      `For ferrous scrap, they pushed us to show HMS grade, rust level, loading weight, yard photos and inspection terms up front.`,
+      `The ferrous scrap offer became stronger after container weight, material photos and buyer inspection steps were added.`
+    ],
+    'metal scrap': [
+      `OroPrime helped us compare metal scrap offers by material grade, inspection method, shipment lot size and realistic CIF assumptions.`,
+      `The metal scrap enquiry stopped being generic once material type, weight, port and document questions were listed clearly.`
+    ],
+    'agro commodities': [
+      `For agro commodities, OroPrime grouped product, harvest window, packing style, shelf life and destination requirements before outreach.`,
+      `They helped us turn a broad agro enquiry into separate product lanes with quantity, quality and document notes.`
+    ],
+    'herbal products': [
+      `For herbal products, they asked about active ingredient, drying method, microbial limits, label needs and batch traceability.`,
+      `The herbal export file became easier to share after quality, packaging and certificate expectations were listed together.`
+    ],
+    'makhana': [
+      `For makhana, OroPrime separated grade, moisture, roasting option, retail pack size and bulk carton assumptions.`,
+      `They helped us explain why premium makhana pricing depends on size, whiteness, cleaning and packing format.`
+    ],
+    'leather goods': [
+      `For leather goods, the enquiry moved from simple photos to material type, stitching quality, hardware finish, MOQ and private-label packing.`,
+      `OroPrime helped us describe belts and wallets by leather grade, finish, size mix, branding option and carton plan.`
+    ],
+    'rice and grains': [
+      `For rice and grains, OroPrime separated basmati and non-basmati needs, bag size, broken percentage, origin and shipment quantity.`,
+      `They made the rice enquiry more usable by asking for grade, moisture, packing weight and destination port before pricing.`
+    ],
+    'raw cashew': [
+      `For raw cashew, they asked for crop year, KOR range, nut count, moisture, defects and bagging before any buyer introduction.`,
+      `OroPrime helped us present raw cashew with origin, quality range, shipment season and document readiness in one place.`
+    ],
+    'jewellery': [
+      `For jewellery, OroPrime asked for metal type, plating, stone setting, design photos, finish quality and retail packing expectations.`,
+      `The jewellery enquiry became easier once designs, material, MOQ, certificate needs and packaging were separated.`
+    ],
+    'baby food': [
+      `For baby food, they focused on ingredients, age label, FSSAI details, pouch size, shelf life and destination compliance notes.`,
+      `OroPrime helped us review baby-food options by formulation, pack format, certificate needs and sample flow.`
+    ],
+    'premium tea': [
+      `For premium tea, OroPrime separated Darjeeling, Assam, CTC and specialty grades with aroma, pack size and certificate notes.`,
+      `They made the tea offer stronger by asking for grade, estate/source, tasting notes, moisture and private-label pack options.`
+    ],
+    'corn silk': [
+      `For corn silk, the team asked for dried form, cut size, moisture, herbal-tea use case and export packaging.`,
+      `OroPrime helped position corn silk as a wellness product by explaining drying, cleaning, packing and buyer applications.`
+    ],
+    'biofuel': [
+      `For biofuel, they separated UCO, biodiesel and ethanol enquiries with source, quality test, volume and sustainability document questions.`,
+      `The biofuel review became practical once feedstock source, test report, volume and buyer destination were put in one file.`
+    ],
+    'moringa powder': [
+      `For moringa powder, OroPrime asked for leaf quality, powder mesh, microbial limits, organic option, pouch size and COA.`,
+      `They helped us compare moringa suppliers by purity, color, grinding quality, certificate status and packaging format.`
+    ],
+    'essential oils': [
+      `For essential oils, they asked for botanical name, extraction method, GC-MS report, bottle size and private-label packing.`,
+      `The essential-oil quote became clearer after purity, aroma profile, test report and minimum order details were aligned.`
+    ],
+    'spice exports': [
+      `For spice exports, OroPrime separated product grade, moisture, grinding option, retail pack and certificate expectations.`,
+      `They helped us prepare spice enquiries with quality, packaging, shelf life and destination compliance in the first message.`
+    ],
+    'ginger powder': [
+      `For ginger powder, they asked for mesh size, moisture, color, microbial limits, pouch or bulk packing and sample quantity.`,
+      `The ginger powder lane became quote-ready after quality specs, packaging and certificate questions were aligned.`
+    ],
+    'cashew processing': [
+      `For cashew processing, OroPrime helped us explain roasting, sorting, grading, packing and sample flow before pricing.`,
+      `They made our processed cashew offer more credible by connecting grade, process, shelf life and carton packing.`
+    ]
+  };
+  const productNotes = notes[product.toLowerCase()] || [
+    `For ${product.toLowerCase()}, OroPrime organized quality, quantity, packing, documents and destination questions before pricing.`,
+    `They made the ${product.toLowerCase()} enquiry more practical by separating product readiness, documents and shipment assumptions.`
+  ];
+  return `${productNotes[index % productNotes.length]} ${close}`;
+}
 
-const indiaTradeProducts = ['Cashew kernels', 'Raw cashew', 'Fresh ginger', 'Dry ginger', 'Ginger powder', 'Rice and grains', 'Agro commodities', 'Ferrous scrap', 'Aluminum scrap', 'Spice exports'];
-const indiaRoles = ['Supplier', 'Exporter', 'Importer', 'Buyer', 'Processor'];
+function productMetric(product: string, role: string, index: number): string {
+  const outcomes = [
+    'RFQ became quote-ready',
+    'Buyer file sharpened',
+    'Grade notes clarified',
+    'Packing details aligned',
+    'Document list completed',
+    'Supplier reply improved',
+    'Sample path defined',
+    'Shipment assumptions ready'
+  ];
+  return `${product.split(' ')[0]} ${outcomes[index % outcomes.length]}`;
+}
 
-const indianTestimonials: Testimonial[] = indiaNames.map((name, index) => {
-  const product = indiaTradeProducts[index % indiaTradeProducts.length];
-  const role = indiaRoles[index % indiaRoles.length];
-  const location = indiaLocations[index % indiaLocations.length];
+const indianTestimonials: Testimonial[] = indianProfiles.map((profile, index) => {
+  const { name, product, role, location, avatarFile } = profile;
+  const country = location.split(',').pop()?.trim() || location;
+  const flagByCountry: Record<string, string> = { Canada: '🇨🇦', Germany: '🇩🇪', Nepal: '🇳🇵', UAE: '🇦🇪', Vietnam: '🇻🇳' };
   return {
     name,
     location,
-    flag: '🇮🇳',
+    flag: flagByCountry[country] || '🇮🇳',
     role,
     product,
-    quote: `${role === 'Supplier' || role === 'Exporter' ? 'OroPrime helped us present our product, origin, packing details and shipment readiness in a way overseas buyers could review quickly.' : 'OroPrime helped us compare supplier readiness, documents, destination assumptions and pricing questions before we moved toward a quote.'}`,
-    metric: `${product.split(' ')[0]} lane prepared`,
-    avatar: index % 8
+    quote: productFeedback(product, role, location, index),
+    metric: productMetric(product, role, index),
+    avatar: index,
+    avatarFile
   };
 });
 
-export const testimonials: Testimonial[] = [...indianTestimonials, ...testimonialsBase].map((item, avatar) => ({ ...item, avatar }));
+const globalProfiles = [
+  { name: 'Emily C.', location: 'United States', flag: '🇺🇸', role: 'Buyer', product: 'Jewellery sourcing', avatarFile: 'person-121-usa.jpg', quote: 'For our fashion jewellery order, OroPrime separated alloy type, plating, stone setting, nickel-free notes and retail-card packing before we asked for final pricing.', metric: 'Jewellery specs locked' },
+  { name: 'Jacob H.', location: 'United States', flag: '🇺🇸', role: 'Importer', product: 'Moringa powder', avatarFile: 'person-13-usa.jpg', quote: 'We were comparing private-label moringa powder for wellness stores. OroPrime helped us ask for COA, microbial limits, pouch size and organic options in one clean RFQ.', metric: 'Wellness RFQ cleaned' },
+  { name: 'Michael R.', location: 'United States', flag: '🇺🇸', role: 'Supplier', product: 'Ferrous scrap', avatarFile: 'person-132-usa.jpg', quote: 'Our scrap offer used to create too many follow-up questions. OroPrime pushed us to show grade photos, loading weight, yard pickup terms and inspection timing up front.', metric: 'Scrap offer standardized' },
+  { name: 'Wei L.', location: 'China', flag: '🇨🇳', role: 'Buyer', product: 'Scrap metal', avatarFile: 'person-122-china.jpg', quote: 'For the mill review, they split HMS, shredded and stainless scrap into separate notes with inspection expectations. That saved us from comparing mixed material offers.', metric: 'Mill review faster' },
+  { name: 'Chen M.', location: 'China', flag: '🇨🇳', role: 'Importer', product: 'Industrial materials', avatarFile: 'person-123-china2.jpg', quote: 'OroPrime helped us frame industrial input enquiries around grade, photos, shipment lot size and port assumptions, which made supplier replies much easier to judge.', metric: 'Grade filter applied' },
+  { name: 'Miguel R.', location: 'Philippines', flag: '🇵🇭', role: 'Buyer', product: 'Agro commodities', avatarFile: 'person-124-philipines.jpg', quote: 'We needed more than a product list. Their team grouped rice, ginger and dry-food options by pack type, shelf life and destination needs before we shortlisted suppliers.', metric: 'Agro shortlist built' },
+  { name: 'Minh T.', location: 'Vietnam', flag: '🇻🇳', role: 'Supplier', product: 'Cashew kernels', avatarFile: 'person-125-vietnam.jpg', quote: 'OroPrime helped us present W-240, W-320 and broken cashew separately, with carton weight and moisture expectations. Buyers understood our offer much faster.', metric: 'Cashew grades separated' },
+  { name: 'Bao N.', location: 'Vietnam', flag: '🇻🇳', role: 'Exporter', product: 'Cashew processing', avatarFile: 'person-126-vietnam2.jpg', quote: 'For processed cashew, they asked us to document roasting, packing, shelf life and sample flow before price discussion. It made the buyer call more practical.', metric: 'Sample flow ready' },
+  { name: 'Linh & An P.', location: 'Vietnam', flag: '🇻🇳', role: 'Supplier', product: 'Cashew trade', avatarFile: 'person-127-vietnam3.jpg', quote: 'The best part was how the raw cashew and kernel discussions were kept separate. We could explain yield, grade and payment expectations without confusion.', metric: 'Yield notes clarified' },
+  { name: 'Kossi A.', location: 'Togo', flag: '🇹🇬', role: 'Supplier', product: 'Raw cashew', avatarFile: 'person-128-togo.jpg', quote: 'OroPrime helped us turn a local raw-cashew supply note into a buyer-ready file with origin, nut count, moisture, bag size and shipment season details.', metric: 'Origin file improved' },
+  { name: 'Amina O.', location: 'Nigeria', flag: '🇳🇬', role: 'Supplier', product: 'Raw cashew', avatarFile: 'person-129-Nigeria.jpg', quote: 'Before OroPrime, our buyers kept asking the same questions. Now our raw cashew offer starts with crop year, KOR range, defects, bagging and port plan.', metric: 'Buyer questions reduced' },
+  { name: 'Chinedu O.', location: 'Nigeria', flag: '🇳🇬', role: 'Exporter', product: 'Agro commodities', avatarFile: 'person-130-Nigeria.jpg', quote: 'They helped us describe agro lots in commercial terms: quantity available, harvest window, inspection method and which documents would be ready before shipment.', metric: 'Export file organized' },
+  { name: 'Daniel P.', location: 'Canada', flag: '🇨🇦', role: 'Importer', product: 'Cashew kernels', avatarFile: 'person-031.jpg', quote: 'Our team wanted retail cashew packs, not a bulk commodity quote. OroPrime helped us compare grade, private-label pouch options and carton configuration first.', metric: 'Retail pack checklist' },
+  { name: 'Hannah K.', location: 'Germany', flag: '🇩🇪', role: 'Importer', product: 'Certified supply', avatarFile: 'person-037.jpg', quote: 'For EU review, they kept certificates and traceability in the first conversation instead of after pricing. That helped us reject weak suppliers early.', metric: 'Compliance-first review' },
+  { name: 'Ahmed R.', location: 'Dubai, UAE', flag: '🇦🇪', role: 'Buyer', product: 'Food imports', avatarFile: 'person-042.jpg', quote: 'Our Dubai distribution enquiry needed product photos, Arabic label questions and realistic carton counts. OroPrime organized that before supplier outreach.', metric: 'GCC buying file ready' },
+  { name: 'Aisha M.', location: 'UAE', flag: '🇦🇪', role: 'Buyer', product: 'Scrap metal', avatarFile: 'person-050.jpg', quote: 'The scrap conversation became more serious once OroPrime added inspection, radiation-free note, container weight and CIF assumptions to the buyer brief.', metric: 'Inspection path clear' },
+  { name: 'Prakash S.', location: 'Nepal', flag: '🇳🇵', role: 'Exporter', product: 'Ginger and agro trade', avatarFile: 'person-109.jpg', quote: 'For ginger, they helped us separate fresh, dry and powder enquiries. We stopped sending one generic reply and started giving buyers a proper grade-wise response.', metric: 'Ginger reply refined' },
+  { name: 'Dawa L.', location: 'Nepal', flag: '🇳🇵', role: 'Supplier', product: 'Agro exports', avatarFile: 'person-112.jpg', quote: 'OroPrime made our agro offer more believable by adding available quantity, packing style, route assumption and what documents we could provide immediately.', metric: 'Offer details sharpened' },
+  { name: 'Tenzin R.', location: 'Nepal', flag: '🇳🇵', role: 'Supplier', product: 'Ginger', avatarFile: 'person-116.jpg', quote: 'They asked the exact questions buyers later asked us: washed or unwashed ginger, size range, season, carton weight and phytosanitary certificate timeline.', metric: 'Seasonal plan drafted' },
+];
+
+const globalTestimonials: Testimonial[] = globalProfiles.map((profile, index) => ({
+  ...profile,
+  quote: profile.quote,
+  metric: profile.metric,
+  avatar: indianTestimonials.length + index
+}));
+
+export const testimonials: Testimonial[] = [...globalTestimonials, ...indianTestimonials].map((item, avatar) => ({ ...item, avatar }));
 
 export const globalExportLeaders: GlobalExportLeader[] = [
   { country: 'China', exports: 3792.95, topGood: 'Broadcasting equipment' },

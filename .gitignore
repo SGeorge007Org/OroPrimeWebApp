@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Angular build output
+dist/
+.angular/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Environment files
+.env
+.env.*
+
+# Temporary files
+tmp/
+*.tmp
+
+# Source upload bundles / duplicate raw media
+*.zip
+src/assets/videos/Ocean_water*
+src/assets/videos/Product1*.mp4

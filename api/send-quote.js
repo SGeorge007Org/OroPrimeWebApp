@@ -27,7 +27,7 @@ function loadLocalEnv() {
 loadLocalEnv();
 
 const salesEmail = process.env.ZOHO_MAIL_USERNAME || 'sales@oroprime.com';
-const quoteRecipientEmail = process.env.QUOTE_TO_EMAIL || 'sumangeorge7@gmail.com';
+const quoteRecipientEmail = process.env.QUOTE_TO_EMAIL || 'sales@oroprime.com';
 
 function clean(value) {
   return String(value || '').trim();

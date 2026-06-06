@@ -349,6 +349,14 @@ nav a.active::after {
   border-radius: 999px;
   background: linear-gradient(90deg, var(--blue), var(--gold));
 }
+.product-slider,
+.case-slider {
+  scrollbar-width: none;
+}
+.product-slider::-webkit-scrollbar,
+.case-slider::-webkit-scrollbar {
+  display: none;
+}
 .slider-card {
   min-width: 0;
   scroll-snap-align: start;
@@ -1606,7 +1614,25 @@ nav a.active::after {
 .three { grid-template-columns: repeat(3, 1fr); }
 .article { min-height: 180px; }
 .rfq { padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.rfq textarea, .rfq button { grid-column: 1 / -1; }
+.rfq textarea, .rfq button, .form-status { grid-column: 1 / -1; }
+.rfq button:disabled {
+  cursor: wait;
+  opacity: .72;
+}
+.form-status {
+  margin: 0;
+  padding: 13px 15px;
+  border: 1px solid rgba(30,121,78,.24);
+  border-radius: 8px;
+  color: #14593a;
+  background: rgba(30,121,78,.08);
+  font-weight: 800;
+}
+.form-status.error {
+  border-color: rgba(155,44,44,.24);
+  color: #8a1f1f;
+  background: rgba(155,44,44,.08);
+}
 
 .site-footer {
   padding: 48px 6vw;

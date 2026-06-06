@@ -34,7 +34,14 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
       </div>
       <div><h4>Global Reach</h4><p><a routerLink="/markets">North America</a></p><p><a routerLink="/markets">GCC and Middle East</a></p><p><a routerLink="/markets">Europe and Asia-Pacific</a></p></div>
       <div><h4>Services</h4><p><a routerLink="/products">Product sourcing</a></p><p><a routerLink="/markets">Market research</a></p><p><a routerLink="/resources">Documentation support</a></p></div>
-      <div><h4>Contact</h4><p><a href="mailto:sales@oroprimeexports.com">sales&#64;oroprimeexports.com</a></p><p><a routerLink="/contact">WhatsApp inquiry enabled</a></p></div>
+      <div>
+        <h4>Operating Locations</h4>
+        <p>Atlanta, GA</p>
+        <p>Dubai</p>
+        <p>Pune</p>
+        <p>Patna</p>
+        <p><a href="mailto:sales@oroprime.com">sales&#64;oroprime.com</a></p>
+      </div>
     </footer>
   `
 })

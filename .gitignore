@@ -9,6 +9,7 @@ dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+vercel-dev*.log
 
 # OS and editor files
 .DS_Store
@@ -19,6 +20,7 @@ Thumbs.db
 # Environment files
 .env
 .env.*
+!.env.example
 
 # Temporary files
 tmp/
@@ -28,3 +30,6 @@ tmp/
 *.zip
 src/assets/videos/Ocean_water*
 src/assets/videos/Product1*.mp4
+
+.vercel
+.env*
